@@ -3,16 +3,18 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Hiro marker display for the AR exhibit." />
   <title>Hiro Marker</title>
+  <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
   <style>
     :root {
-      --bg: #071822;
-      --panel: rgba(11, 24, 36, 0.88);
+      --bg: #06131f;
+      --panel: rgba(12, 24, 39, 0.9);
       --panel-border: rgba(148, 163, 184, 0.25);
-      --text: #eef7ff;
-      --muted: #b8ccdc;
+      --text: #edf6ff;
+      --muted: #a7c3d8;
       --accent: #67e8f9;
-      --shadow: rgba(4, 10, 15, 0.48);
+      --shadow: rgba(6, 19, 31, 0.45);
     }
 
     * { box-sizing: border-box; }
@@ -20,20 +22,74 @@
     html, body {
       margin: 0;
       min-height: 100%;
-      font-family: Arial, Helvetica, sans-serif;
-      background: radial-gradient(circle at top, #122d40 0%, var(--bg) 55%);
+      background: radial-gradient(circle at top, #0f2137 0%, var(--bg) 55%);
       color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
     }
 
     body {
-      display: grid;
-      place-items: center;
-      min-height: 100vh;
-      padding: 24px;
+      padding: 28px;
+    }
+
+    .page-shell {
+      width: min(1100px, 100%);
+      margin: 0 auto;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 24px;
+      padding: 16px 20px;
+      border: 1px solid var(--panel-border);
+      border-radius: 18px;
+      background: rgba(9, 19, 30, 0.7);
+      backdrop-filter: blur(8px);
+      box-shadow: 0 10px 30px var(--shadow);
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 1.2rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+    }
+
+    .brand-logo {
+      width: 30px;
+      height: 30px;
+      border-radius: 10px;
+      box-shadow: 0 8px 24px rgba(103, 232, 249, 0.4);
+      display: block;
+    }
+
+    .nav {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .nav a {
+      color: var(--muted);
+      text-decoration: none;
+      padding: 8px 12px;
+      border-radius: 10px;
+      border: 1px solid transparent;
+      transition: 0.2s ease;
+    }
+
+    .nav a:hover {
+      border-color: var(--panel-border);
+      color: var(--text);
     }
 
     .marker-card {
       width: min(760px, 100%);
+      margin: 0 auto;
       padding: 32px 28px;
       border-radius: 24px;
       border: 1px solid var(--panel-border);
@@ -108,27 +164,62 @@
       border: 1px solid var(--panel-border);
       color: var(--text);
     }
+
+    @media (max-width: 640px) {
+      body {
+        padding: 16px;
+      }
+
+      .topbar {
+        padding: 12px 14px;
+      }
+
+      .nav {
+        display: none;
+      }
+
+      .marker-card {
+        padding: 24px 16px;
+      }
+
+      .button {
+        width: 100%;
+      }
+    }
   </style>
 </head>
 <body>
-  <main class="marker-card">
-    <p class="eyebrow">Step 1</p>
-    <h1>Show this Hiro marker</h1>
-    <p>
-      Open the AR app on the phone, then hold the laptop screen so the camera sees the marker below.
-      The phone will detect the image and display the 3D scene.
-    </p>
+  <div class="page-shell">
+    <header class="topbar">
+      <div class="brand">
+        <img class="brand-logo" src="./favicon.svg" alt="AR Hiro Exhibit logo" />
+        <span>Hiro Exhibit</span>
+      </div>
+      <nav class="nav">
+        <a href="./index.html">AR App</a>
+        <a href="./marker.html">Marker</a>
+      </nav>
+    </header>
 
-    <img
-      class="marker-image"
-      src="https://raw.githubusercontent.com/AR-js-org/AR.js/master/data/images/hiro.png"
-      alt="Hiro AR marker"
-    />
+    <main class="marker-card">
+      <p class="eyebrow">Step 1</p>
+      <h1>Show this Hiro marker</h1>
+      <p>
+        Open the AR app on the phone, then hold the laptop screen so the camera sees the marker below.
+        The phone will detect the image and display the 3D scene.
+      </p>
 
-    <div class="actions">
-      <a class="button primary" href="./index.html">Open AR app</a>
-      <a class="button secondary" href="./index.html#scene">Jump to scene</a>
-    </div>
-  </main>
+      <img
+        class="marker-image"
+        src="https://raw.githubusercontent.com/AR-js-org/AR.js/master/data/images/hiro.png"
+        alt="Hiro AR marker"
+      />
+
+      <div class="actions">
+        <a class="button primary" href="./index.html">Open AR app</a>
+        <a class="button secondary" href="./index.html#scene">Jump to scene</a>
+      </div>
+    </main>
+  </div>
 </body>
 </html>
