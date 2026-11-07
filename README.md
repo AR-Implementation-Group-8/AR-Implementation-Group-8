@@ -1,20 +1,30 @@
 # AR-Implementation-Group-8
 
-Simple Hiro-marker AR demo built with A-Frame and AR.js.
+A small Hiro-marker AR exhibit built with A-Frame and AR.js for GitHub Pages hosting.
 
-## Features
-- Marker-based Hiro scene with multiple 3D objects and a label
-- Animated objects using position and rotation
-- Two tap interactions: colour cycling and grow toggle
-- Status banner that updates on marker found/lost
+## Pages
+- `index.html` — AR experience for the phone
+- `marker.html` — Hiro marker page for the laptop screen
 
-## Run locally
-1. Open a terminal in this folder.
+## Local setup
+1. Open a terminal in this project folder.
 2. Run: `python -m http.server 8000`
-3. Visit: `http://localhost:8000/main.html`
+3. Visit:
+   - Laptop: `http://localhost:8000/marker.html`
+   - Phone: `http://localhost:8000/index.html`
 
-## 3D model credit
-- Model: Box Textured
-- Source: Khronos glTF Sample Assets
-- License: CC BY 4.0
-- Credit: © 2017 Cesium, used with attribution
+## Cross-device use
+- Open the marker page on the laptop.
+- Open the AR page on the phone.
+- Hold the laptop screen so the phone camera can see the Hiro marker.
+- Allow camera permissions on the phone.
+
+## Model credit
+- Model: Boom Box
+- Source: KhronosGroup glTF Sample Assets
+- Model files: CC0-1.0
+- Metadata and documentation: CC-BY-4.0
+- Source URL: https://github.com/KhronosGroup/glTF-Sample-Assets/tree/main/Models/BoomBox
+
+## GitHub Pages
+This project is designed as a static site, so it can be published directly through GitHub Pages without any build step.

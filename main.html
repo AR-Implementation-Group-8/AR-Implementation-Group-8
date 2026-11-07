@@ -3,20 +3,217 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hiro Marker AR Scene</title>
+  <title>Hiro Marker Exhibit</title>
 
   <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js@3.4.5/aframe/build/aframe-ar.js"></script>
 
   <style>
-    body {
+    :root {
+      --bg: #06131f;
+      --panel: rgba(12, 24, 39, 0.9);
+      --panel-border: rgba(148, 163, 184, 0.25);
+      --text: #edf6ff;
+      --muted: #a7c3d8;
+      --accent: #67e8f9;
+      --success: #22c55e;
+      --danger: #ef4444;
+      --shadow: rgba(6, 19, 31, 0.45);
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
       margin: 0;
+      min-height: 100%;
+      background: radial-gradient(circle at top, #0f2137 0%, var(--bg) 55%);
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 28px;
+    }
+
+    .page-shell {
+      width: min(1200px, 100%);
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 24px;
+      padding: 16px 20px;
+      border: 1px solid var(--panel-border);
+      border-radius: 18px;
+      background: rgba(9, 19, 30, 0.7);
+      backdrop-filter: blur(8px);
+      box-shadow: 0 10px 30px var(--shadow);
+    }
+
+    .brand {
+      font-size: 1.2rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+    }
+
+    .brand-mark {
+      display: inline-block;
+      margin-right: 8px;
+      padding: 4px 8px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #67e8f9, #4f46e5);
+      color: #041018;
+      font-size: 0.75rem;
+      font-weight: 800;
+    }
+
+    .nav {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .nav a {
+      color: var(--muted);
+      text-decoration: none;
+      padding: 8px 12px;
+      border-radius: 10px;
+      border: 1px solid transparent;
+      transition: 0.2s ease;
+    }
+
+    .nav a:hover {
+      border-color: var(--panel-border);
+      color: var(--text);
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(280px, 380px) minmax(0, 1fr);
+      gap: 24px;
+      align-items: stretch;
+    }
+
+    .info-card,
+    .scene-card {
+      border: 1px solid var(--panel-border);
+      border-radius: 22px;
+      background: var(--panel);
+      backdrop-filter: blur(8px);
+      box-shadow: 0 12px 40px var(--shadow);
+    }
+
+    .info-card {
+      padding: 28px 22px;
+    }
+
+    .eyebrow {
+      margin: 0 0 12px;
+      color: var(--accent);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0 0 12px;
+      font-size: clamp(2rem, 3vw, 3rem);
+      line-height: 1.06;
+    }
+
+    .intro {
+      margin: 0 0 20px;
+      color: var(--muted);
+      line-height: 1.6;
+      font-size: 1rem;
+    }
+
+    .feature-list {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 22px;
+      display: grid;
+      gap: 10px;
+      color: var(--text);
+    }
+
+    .feature-list li {
+      position: relative;
+      padding-left: 22px;
+      color: var(--muted);
+    }
+
+    .feature-list li::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-size: 1.8rem;
+      line-height: 1;
+      top: -2px;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 22px;
+    }
+
+    .button {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 44px;
+      padding: 0 18px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: 700;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .button:hover {
+      transform: translateY(-1px);
+    }
+
+    .button.primary {
+      background: linear-gradient(135deg, #67e8f9, #60a5fa);
+      color: #06131f;
+      box-shadow: 0 10px 24px rgba(103, 232, 249, 0.35);
+    }
+
+    .button.secondary {
+      background: transparent;
+      border: 1px solid var(--panel-border);
+      color: var(--text);
+    }
+
+    .credit-box {
+      border-top: 1px solid var(--panel-border);
+      padding-top: 16px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .credit-box strong {
+      color: var(--text);
+    }
+
+    .scene-card {
+      position: relative;
+      min-height: 640px;
       overflow: hidden;
-      background: #0f172a;
     }
 
     .status-banner {
-      position: fixed;
+      position: absolute;
       top: 20px;
       left: 50%;
       transform: translateX(-50%);
@@ -25,7 +222,7 @@
       border-radius: 999px;
       color: #e2e8f0;
       background: rgba(15, 23, 42, 0.75);
-      border: 1px solid rgba(148, 163, 184, 0.5);
+      border: 1px solid rgba(148, 163, 184, 0.55);
       text-align: center;
       font: 700 14px/1.2 Arial, sans-serif;
       letter-spacing: 0.04em;
@@ -33,41 +230,97 @@
       transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
       box-shadow: 0 8px 24px rgba(15, 23, 42, 0.25);
     }
+
+    a-scene {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+      background: rgba(4, 13, 18, 0.65);
+    }
+
+    @media (max-width: 900px) {
+      .hero {
+        grid-template-columns: 1fr;
+      }
+
+      .scene-card {
+        min-height: 540px;
+      }
+    }
   </style>
 </head>
 <body>
-  <div id="status-banner" class="status-banner">Marker searching...</div>
+  <div class="page-shell">
+    <header class="topbar">
+      <div class="brand"><span class="brand-mark">AR</span>Hiro Exhibit</div>
+      <nav class="nav">
+        <a href="./marker.html">Marker</a>
+        <a href="./index.html">AR App</a>
+      </nav>
+    </header>
 
-  <a-scene embedded vr-mode-ui="enabled: false" arjs="sourceType: webcam; debugUIEnabled: false;">
-    <a-marker id="hiro-marker" preset="hiro">
-      <a-box position="0 0.4 0" scale="1.8 0.25 1.8" material="color: #2dd4bf; opacity: 0.9"></a-box>
+    <main class="hero">
+      <section class="info-card">
+        <p class="eyebrow">Interactive exhibit</p>
+        <h1>Hiro marker experience</h1>
+        <p class="intro">
+          Point your phone camera at the laptop display to trigger the AR scene. The marker activates the exhibit and reveals an animated set of objects and interactions.
+        </p>
 
-      <a-sphere position="-0.8 1.2 0.2" radius="0.35" material="color: #f97316"
-        animation="property: position; dir: alternate; to: -0.8 1.45 0.2; dur: 900; loop: true; easing: easeInOutSine" color-cycle>
-      </a-sphere>
+        <ul class="feature-list">
+          <li>Animated geometry with rotation and floating motion</li>
+          <li>Tap-to-change sphere colour and cylinder size</li>
+          <li>Live marker detection banner for found and lost states</li>
+        </ul>
 
-      <a-cylinder position="0.8 0.9 0.15" radius="0.3" height="1.8" material="color: #facc15" toggle-grow></a-cylinder>
+        <div class="actions">
+          <a class="button primary" href="./marker.html">Show marker</a>
+          <a class="button secondary" href="#scene">Open AR view</a>
+        </div>
 
-      <a-torus position="0 1.7 -0.5" radius="0.8" tube="0.12" material="color: #38bdf8"
-        animation="property: rotation; to: 0 360 0; dur: 5000; loop: true; easing: linear"></a-torus>
+        <div class="credit-box">
+          <strong>Model credit:</strong> Boom Box from KhronosGroup glTF Sample Assets.<br />
+          Model files are CC0-1.0; the metadata and documentation are CC-BY-4.0.
+        </div>
+      </section>
 
-      <a-entity gltf-model="https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/main/Models/BoxTextured/glTF-Binary/BoxTextured.glb"
-        position="1.4 1.1 -0.8" scale="0.35 0.35 0.35"
-        animation="property: rotation; to: 0 360 0; dur: 4000; loop: true; easing: linear"></a-entity>
+      <section class="scene-card" id="scene">
+        <div id="status-banner" class="status-banner">Marker searching...</div>
 
-      <a-text value="HIRO LAB" position="0 2.4 0.15" align="center" color="#f8fafc" width="6" anchor="center"
-        font="https://cdn.aframe.io/fonts/Exo2Bold.fnt"></a-text>
-    </a-marker>
+        <a-scene embedded vr-mode-ui="enabled: false" arjs="sourceType: webcam; debugUIEnabled: false;">
+          <a-marker id="hiro-marker" preset="hiro">
+            <a-box position="0 0.4 0" scale="1.8 0.25 1.8" material="color: #2dd4bf; opacity: 0.9"></a-box>
 
-    <a-entity camera cursor="rayOrigin: mouse" raycaster="objects: [clickable]"></a-entity>
-  </a-scene>
+            <a-sphere position="-0.8 1.2 0.2" radius="0.35" material="color: #f97316"
+              animation="property: position; dir: alternate; to: -0.8 1.45 0.2; dur: 900; loop: true; easing: easeInOutSine" color-cycle>
+            </a-sphere>
+
+            <a-cylinder position="0.8 0.9 0.15" radius="0.3" height="1.8" material="color: #facc15" toggle-grow></a-cylinder>
+
+            <a-torus position="0 1.7 -0.5" radius="0.8" tube="0.12" material="color: #38bdf8"
+              animation="property: rotation; to: 0 360 0; dur: 5000; loop: true; easing: linear"></a-torus>
+
+            <a-entity gltf-model="https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/main/Models/BoomBox/glTF-Binary/BoomBox.glb"
+              position="1.4 1.1 -0.8" scale="0.35 0.35 0.35"
+              animation="property: rotation; to: 0 360 0; dur: 4000; loop: true; easing: linear"></a-entity>
+
+            <a-text value="HIRO LAB" position="0 2.4 0.15" align="center" color="#f8fafc" width="6" anchor="center"
+              font="https://cdn.aframe.io/fonts/Exo2Bold.fnt"></a-text>
+          </a-marker>
+
+          <a-entity camera cursor="rayOrigin: mouse" raycaster="objects: [clickable]"></a-entity>
+        </a-scene>
+      </section>
+    </main>
+  </div>
 
   <script>
     AFRAME.registerComponent('color-cycle', {
       init: function () {
         const colors = ['#f97316', '#f43f5e', '#22c55e', '#38bdf8', '#a78bfa'];
         let currentIndex = 0;
-
         this.el.setAttribute('class', 'clickable');
         this.el.addEventListener('click', () => {
           currentIndex = (currentIndex + 1) % colors.length;
