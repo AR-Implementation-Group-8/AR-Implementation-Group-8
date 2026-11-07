@@ -3,7 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Hiro marker AR exhibit with animated 3D objects and mobile-friendly preview." />
   <title>Hiro Marker Exhibit</title>
+  <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
 
   <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js@3.4.5/aframe/build/aframe-ar.js"></script>
@@ -57,20 +59,20 @@
     }
 
     .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
       font-size: 1.2rem;
       font-weight: 700;
       letter-spacing: 0.04em;
     }
 
-    .brand-mark {
-      display: inline-block;
-      margin-right: 8px;
-      padding: 4px 8px;
-      border-radius: 8px;
-      background: linear-gradient(135deg, #67e8f9, #4f46e5);
-      color: #041018;
-      font-size: 0.75rem;
-      font-weight: 800;
+    .brand-logo {
+      width: 30px;
+      height: 30px;
+      border-radius: 10px;
+      box-shadow: 0 8px 24px rgba(103, 232, 249, 0.4);
+      display: block;
     }
 
     .nav {
@@ -95,7 +97,7 @@
 
     .hero {
       display: grid;
-      grid-template-columns: minmax(280px, 380px) minmax(0, 1fr);
+      grid-template-columns: minmax(280px, 420px) minmax(0, 1fr);
       gap: 24px;
       align-items: stretch;
     }
@@ -111,6 +113,9 @@
 
     .info-card {
       padding: 28px 22px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
 
     .eyebrow {
@@ -124,8 +129,9 @@
 
     h1 {
       margin: 0 0 12px;
-      font-size: clamp(2rem, 3vw, 3rem);
-      line-height: 1.06;
+      font-size: clamp(2.2rem, 3vw, 3.6rem);
+      line-height: 1.04;
+      letter-spacing: -0.04em;
     }
 
     .intro {
@@ -141,7 +147,6 @@
       margin: 0 0 22px;
       display: grid;
       gap: 10px;
-      color: var(--text);
     }
 
     .feature-list li {
@@ -171,7 +176,7 @@
       display: inline-flex;
       justify-content: center;
       align-items: center;
-      min-height: 44px;
+      min-height: 48px;
       padding: 0 18px;
       border-radius: 12px;
       text-decoration: none;
@@ -240,6 +245,10 @@
       background: rgba(4, 13, 18, 0.65);
     }
 
+    .mobile-cta {
+      display: none;
+    }
+
     @media (max-width: 900px) {
       .hero {
         grid-template-columns: 1fr;
@@ -249,12 +258,55 @@
         min-height: 540px;
       }
     }
+
+    @media (max-width: 640px) {
+      body {
+        padding: 16px;
+      }
+
+      .topbar {
+        padding: 12px 14px;
+      }
+
+      .nav {
+        display: none;
+      }
+
+      .info-card {
+        padding: 20px 16px;
+      }
+
+      .button.primary {
+        width: 100%;
+      }
+
+      .button.secondary {
+        width: 100%;
+      }
+
+      .mobile-cta {
+        position: sticky;
+        bottom: 12px;
+        display: flex;
+        justify-content: center;
+        margin-top: 18px;
+        z-index: 15;
+      }
+
+      .mobile-cta .button {
+        width: min(100%, 420px);
+        box-shadow: 0 12px 28px rgba(96, 165, 250, 0.32);
+      }
+    }
   </style>
 </head>
 <body>
   <div class="page-shell">
     <header class="topbar">
-      <div class="brand"><span class="brand-mark">AR</span>Hiro Exhibit</div>
+      <div class="brand">
+        <img class="brand-logo" src="./favicon.svg" alt="AR Hiro Exhibit logo" />
+        <span>Hiro Exhibit</span>
+      </div>
       <nav class="nav">
         <a href="./marker.html">Marker</a>
         <a href="./index.html">AR App</a>
@@ -264,15 +316,15 @@
     <main class="hero">
       <section class="info-card">
         <p class="eyebrow">Interactive exhibit</p>
-        <h1>Hiro marker experience</h1>
+        <h1>Bring the marker to life.</h1>
         <p class="intro">
-          Point your phone camera at the laptop display to trigger the AR scene. The marker activates the exhibit and reveals an animated set of objects and interactions.
+          Point your phone camera at the laptop screen to trigger the 3D scene. The Hiro marker unlocks a playful AR display with motion, colour, and interactive objects.
         </p>
 
         <ul class="feature-list">
-          <li>Animated geometry with rotation and floating motion</li>
-          <li>Tap-to-change sphere colour and cylinder size</li>
-          <li>Live marker detection banner for found and lost states</li>
+          <li>Animated geometry with floating motion and rotation</li>
+          <li>Tap interactions for colour and scale changes</li>
+          <li>Real-time detection banner when the marker is found</li>
         </ul>
 
         <div class="actions">
@@ -288,6 +340,10 @@
 
       <section class="scene-card" id="scene">
         <div id="status-banner" class="status-banner">Marker searching...</div>
+
+        <div class="mobile-cta">
+          <a class="button primary" href="./marker.html">Open AR app</a>
+        </div>
 
         <a-scene embedded vr-mode-ui="enabled: false" arjs="sourceType: webcam; debugUIEnabled: false;">
           <a-marker id="hiro-marker" preset="hiro">
