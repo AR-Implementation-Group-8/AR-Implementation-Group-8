@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no" />
   <meta name="description" content="Hiro marker AR exhibit with animated 3D objects and mobile-friendly preview." />
   <title>Hiro Marker Exhibit</title>
   <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
@@ -28,11 +28,14 @@
     html, body {
       margin: 0;
       min-height: 100%;
+      min-height: 100dvh;
       background: radial-gradient(circle at top, #0f2137 0%, var(--bg) 55%);
       color: var(--text);
       font-family: Arial, Helvetica, sans-serif;
       -webkit-text-size-adjust: 100%;
       text-size-adjust: 100%;
+      overscroll-behavior: none;
+      touch-action: manipulation;
     }
 
     body {
@@ -41,6 +44,7 @@
       align-items: center;
       padding: 28px;
       overflow-x: hidden;
+      max-width: 100vw;
     }
 
     .page-shell {
@@ -262,6 +266,17 @@
       }
     }
 
+    @media (orientation: landscape) and (max-width: 960px) {
+      body {
+        align-items: flex-start;
+        padding-top: 12px;
+      }
+
+      .scene-card {
+        min-height: 420px;
+      }
+    }
+
     @media (max-width: 640px) {
       body {
         padding: 12px;
@@ -408,6 +423,17 @@
   </div>
 
   <script>
+    function lockPortraitOrientation() {
+      if (screen.orientation && typeof screen.orientation.lock === 'function') {
+        screen.orientation.lock('portrait').catch(function () {
+          // Some browsers block orientation locking without a user gesture.
+        });
+      }
+    }
+
+    document.addEventListener('touchstart', lockPortraitOrientation, { once: true });
+    document.addEventListener('click', lockPortraitOrientation, { once: true });
+
     AFRAME.registerComponent('color-cycle', {
       init: function () {
         const colors = ['#f97316', '#f43f5e', '#22c55e', '#38bdf8', '#a78bfa'];
