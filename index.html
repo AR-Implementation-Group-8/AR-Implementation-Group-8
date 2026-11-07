@@ -31,6 +31,8 @@
       background: radial-gradient(circle at top, #0f2137 0%, var(--bg) 55%);
       color: var(--text);
       font-family: Arial, Helvetica, sans-serif;
+      -webkit-text-size-adjust: 100%;
+      text-size-adjust: 100%;
     }
 
     body {
@@ -38,6 +40,7 @@
       justify-content: center;
       align-items: center;
       padding: 28px;
+      overflow-x: hidden;
     }
 
     .page-shell {
@@ -261,27 +264,57 @@
 
     @media (max-width: 640px) {
       body {
-        padding: 16px;
+        padding: 12px;
+      }
+
+      .page-shell {
+        width: 100%;
       }
 
       .topbar {
         padding: 12px 14px;
+        margin-bottom: 16px;
+      }
+
+      .brand span {
+        font-size: 1rem;
       }
 
       .nav {
         display: none;
       }
 
+      .hero {
+        gap: 16px;
+      }
+
       .info-card {
         padding: 20px 16px;
       }
 
-      .button.primary {
+      .actions {
+        display: grid;
+        grid-template-columns: 1fr;
+      }
+
+      .button.primary,
+      .button.secondary,
+      .mobile-cta .button {
         width: 100%;
       }
 
-      .button.secondary {
-        width: 100%;
+      .scene-card {
+        min-height: 420px;
+        height: 56vh;
+        max-height: 560px;
+      }
+
+      .status-banner {
+        top: 14px;
+        width: calc(100% - 24px);
+        min-width: 0;
+        padding: 10px 12px;
+        font-size: 12px;
       }
 
       .mobile-cta {

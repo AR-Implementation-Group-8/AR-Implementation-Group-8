@@ -25,10 +25,13 @@
       background: radial-gradient(circle at top, #0f2137 0%, var(--bg) 55%);
       color: var(--text);
       font-family: Arial, Helvetica, sans-serif;
+      -webkit-text-size-adjust: 100%;
+      text-size-adjust: 100%;
     }
 
     body {
       padding: 28px;
+      overflow-x: hidden;
     }
 
     .page-shell {
@@ -167,7 +170,11 @@
 
     @media (max-width: 640px) {
       body {
-        padding: 16px;
+        padding: 12px;
+      }
+
+      .page-shell {
+        width: 100%;
       }
 
       .topbar {
@@ -178,8 +185,17 @@
         display: none;
       }
 
+      .brand span {
+        font-size: 1rem;
+      }
+
       .marker-card {
         padding: 24px 16px;
+      }
+
+      .actions {
+        display: grid;
+        grid-template-columns: 1fr;
       }
 
       .button {
