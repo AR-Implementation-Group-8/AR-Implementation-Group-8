@@ -259,6 +259,10 @@
 
     document.addEventListener('touchstart', lockPortraitOrientation, { once: true });
     document.addEventListener('click', lockPortraitOrientation, { once: true });
+    window.addEventListener('orientationchange', lockPortraitOrientation);
+    if (screen.orientation && typeof screen.orientation.addEventListener === 'function') {
+      screen.orientation.addEventListener('change', lockPortraitOrientation);
+    }
   </script>
 </body>
 </html>
